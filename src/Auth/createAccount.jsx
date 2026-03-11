@@ -18,6 +18,7 @@ const CreateAccount = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+
   //function that handles change in form data
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
@@ -70,8 +71,13 @@ const CreateAccount = () => {
 
       const data = await response.json();
 
+
+
       if (response.ok) {
-        navigate("/App");
+        navigate("/home");
+      } else if (response.status === 409) {
+        setError("Account already exists");
+f
       } else setError(data.message || "something went wrong");
     } catch (err) {
       setError("Could not connect to Server");
@@ -108,7 +114,8 @@ const CreateAccount = () => {
             <small>Join our resource booking system</small>
           </div>
           <form className={styles.form} onSubmit={handleSubmit}>
-            {/* full name */}
+
+       
             <div className={styles.field}>
               <label htmlFor="name">Full Name</label>
               <div className={styles.inputWrap}>
@@ -196,9 +203,11 @@ const CreateAccount = () => {
               />
               <label htmlFor="check">I agree to terms and conditions</label>
             </div>
+
             {error ? <p style={{ color: "crimson" }}>{error}</p> : null}
             <button className={styles.button} type="submit" disabled={loading}>
               {loading ? "Signing up..." : "Sign up"}
+
             </button>
             <p className={styles.authFooter}>
               Already have an account? <Link to="/login">Sign in</Link>
