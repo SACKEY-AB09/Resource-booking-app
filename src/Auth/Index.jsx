@@ -1,7 +1,8 @@
-import styles from'./css/index_css.module.css'
-import SigninSvg from '../assets/Signin.svg'
+import { Link } from 'react-router-dom';
+import styles from './css/index_css.module.css';
+import SigninSvg from '../assets/Signin.svg';
 
-const Index =()=>{
+const Index = () => {
     return (
     <div className={styles.container}>
         
@@ -20,7 +21,7 @@ const Index =()=>{
                     <input type="password" id='password' className={styles.input}/>
                 <button className={styles.button}>Sign In</button>
                 </form>
-                <p>Don't have an account?<a>Sign up</a></p>
+                <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
             
         </div>
 </div>)}
