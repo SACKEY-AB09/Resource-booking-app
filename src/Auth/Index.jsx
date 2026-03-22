@@ -42,9 +42,17 @@ const Index = () => {
       console.log("data:", data);
 
       if (response.ok) {
+        console.log(JSON.stringify(data));
+
+        // check headers too
+        const headerToken = response.headers.get("Authorization");
+        const headerToken2 = response.headers.get("x-auth-token");
+        console.log("header token:", headerToken);
+        console.log("header token2:", headerToken2);
+
+        localStorage.setItem("user", JSON.stringify(data.user));
         localStorage.setItem("token", data.token);
-        console.log(data);
-        navigate("/App");
+        navigate("/Admin");
       } else if (response.status === 401) {
         setError("Incorrect Email or Password");
       } else if (response.status === 404) {

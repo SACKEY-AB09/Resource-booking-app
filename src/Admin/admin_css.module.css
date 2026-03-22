@@ -1,0 +1,52 @@
+.container {
+  padding: 0 10%;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #002b56;
+  color: white;
+  box-sizing: border-box;
+  padding: 0 2rem;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  /* justify-content: space-around; */
+  /* width: 20%; */
+}
+
+.panel,
+.name {
+  display: flex;
+  /* flex-direction: row; */
+}
+
+.minicard {
+  padding: 0 5px;
+  border-radius: 10px;
+  width: 10rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.minicards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+
+  margin-top: 10px;
+}
+
+.cardnum {
+  margin: 0;
+  align-self: center;
+}

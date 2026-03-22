@@ -12,7 +12,7 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/*" element={<AuthStack />} />
         <Route path="/App/*" element={<App />} />
-        <Route path="/Admin" element={<AdminStack />} />
+        <Route path="/Admin/*" element={<AdminStack />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
