@@ -17,16 +17,16 @@ const MyBookings = () => {
   //function to receive data from backend
   const fetchBookings = async () => {
     // setLoading(false);
-    const token = localStorage.getItem("token");
-    console.log(token);
+    // const token = localStorage.getItem("token");
+    // console.log(token);
 
     try {
       const response = await fetch(`${API_BASE}/bookings/my-bookings`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
+        credentials: "include",
       });
 
       const data = await response.json();
@@ -34,6 +34,7 @@ const MyBookings = () => {
 
       if (response.ok) {
         setBookings(data);
+        console.log(bookings);
       } else if (response.status == 401) {
         setError("Session Expired. Please Log in again.");
       } else {
@@ -67,6 +68,11 @@ const MyBookings = () => {
             <img src={Date} width={20} />
             <p>New Booking</p>
           </button>
+        </div>
+        <div className="section2">
+          {bookings.map((booking) => (
+            <div></div>
+          ))}
         </div>
       </div>
     </div>
