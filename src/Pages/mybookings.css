@@ -57,6 +57,7 @@
   border-radius: 5%;
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 
 .info {
@@ -118,4 +119,10 @@
   .section2 {
     grid-template-columns: 1fr; /* 1 column on mobile */
   }
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }

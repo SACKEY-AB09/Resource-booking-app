@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { API_BASE } from "../config/api";
 import Header from "../componemts/header1.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
+import Time from "../componemts/time.svg";
+import People from "../componemts/people.svg";
+import Location from "../componemts/location.svg";
 
 const MyBookings = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -96,12 +99,21 @@ const MyBookings = () => {
               {/* <a href={booking.location} target="_blank" rel="noreferrer">
                 📍 View Location
               </a> */}
-              <p className="info">Capacity: {booking.capacity}</p>
-              <p className="info">{formatDate(booking.start_time)}</p>
-              <p className="info">
-                {formatTime(booking.start_time)} -{" "}
-                {formatTime(booking.end_time)}
-              </p>
+              <div className="item">
+                <img src={People} />
+                <p className="info">Capacity: {booking.capacity}</p>
+              </div>
+              <div className="item">
+                <img src={Cal} color="black" />
+                <p className="info">{formatDate(booking.start_time)}</p>
+              </div>
+              <div className="item">
+                <img src={Time} />
+                <p className="info">
+                  {formatTime(booking.start_time)} -{" "}
+                  {formatTime(booking.end_time)}
+                </p>
+              </div>
               <button className="button">View Details</button>
             </div>
           ))}
