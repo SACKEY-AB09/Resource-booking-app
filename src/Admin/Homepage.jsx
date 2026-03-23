@@ -96,12 +96,14 @@ const Homepage = () => {
         <span>Settings</span>
       </button>
 
-      <Link 
-        to="/login" 
+      <button 
+        // to="/login" 
         className="ah-admin-menu__item ah-admin-menu__item--logout"
         onClick={() => {
           localStorage.clear(); // ← clears all saved data on logout
           setMenuOpen(false);
+          navigate('/login', {replace: true})
+
         }}
       >
         <span className="ah-admin-menu__icon">
@@ -112,7 +114,7 @@ const Homepage = () => {
           </svg>
         </span>
         <span>Log Out</span>
-      </Link>
+      </button>
     </div>
   )}
 </div> 

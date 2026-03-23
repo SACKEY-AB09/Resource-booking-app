@@ -4,6 +4,7 @@ import ResourceCard from '../componemts/ResourceCard';
 import Footer from '../componemts/footer';
 import '../Pages/intropage.css';
 import { API_BASE } from '../config/api';
+import BackButton from '../componemts/backuButton';
 
 
 const INITIAL_RESOURCE_COUNT = 6;
@@ -123,7 +124,9 @@ const handleDelete = async (resourceId) => {
     <div className="intropage">
       {/* User header with profile menu */}
         <header className="ah-topbar">
-        <div className="ah-topbar__left">Resource management</div>
+          <BackButton />
+        <div className="ah-topbar__left">
+          Resource management</div>
         <div className="ah-topbar__right">
           <span className="ah-chip">Resource available</span>
           <span className="ah-admin">

@@ -6,6 +6,8 @@ import AuthStack from '../Stacks/AuthStack'
 import AdminStack from '../Stacks/AdminStack'
 import Booking from './Pages/Booking.jsx'
 import ResourceAvailable from './Admin/resourceavailable.jsx'
+import MyBookings from './Pages/MyBookings.jsx'
+import BookResource from './Pages/bookResource.jsx'
 
 function App() {
   return (

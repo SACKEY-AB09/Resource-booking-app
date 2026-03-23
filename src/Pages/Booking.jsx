@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import './booking.css';
 import { API_BASE } from '../config/api';
+import BackButton from '../componemts/backuButton';
 
 // Duration options in hours
 const DURATION_OPTIONS = [0.5, 1, 1.5, 2, 2.5, 3, 4, 6, 8];
@@ -120,6 +121,8 @@ function Booking({ isAdmin = false }) {
     <div className="bp-root">
       {/* ── Header ── */}
       <header className="bp-header">
+        <BackButton />
+
         <span className="bp-header__brand">Resource Booking</span>
         <div className="bp-header__right">
           {isAdmin && (

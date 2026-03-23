@@ -5,6 +5,7 @@ import Footer from "../componemts/footer";
 import "./intropage.css";
 import { API_BASE } from "../config/api";
 import LOGO from "../assets/LOGO.png";
+import BackButton from "../componemts/backuButton";
 
 const INITIAL_RESOURCE_COUNT = 6;
 const CATEGORIES = [
@@ -158,9 +159,14 @@ function UserHomepage() {
               <button onClick={() => navigate("/mybookings")}>
                 <span className="user-header__menu-item">My bookings</span>
               </button>
-              <Link
-                to="/login"
-                className="user-header__menu-item user-header__menu-item--logout"
+              <button
+              className="user-header__menu-item user-header__menu-item--logout"
+              onClick={() => {
+              localStorage.clear(); // ← clears all saved data on logout
+              setMenuOpen(false);
+                navigate('/login', {replace: true})
+
+                }}
               >
                 <span className="user-header__menu-icon">
                   <svg
@@ -175,7 +181,7 @@ function UserHomepage() {
                   </svg>
                 </span>
                 <span>Log Out</span>
-              </Link>
+              </button>
             </div>
           )}
         </div>
