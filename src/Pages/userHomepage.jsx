@@ -172,7 +172,7 @@ function UserHomepage() {
                 </span>
                 <span>Notifications</span>
               </Link>
-              <button type="button" className="user-header__menu-item">
+              <Link to="/profile" className="user-header__menu-item">
                 <span className="user-header__menu-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
@@ -180,8 +180,8 @@ function UserHomepage() {
                   </svg>
                 </span>
                 <span>View Profile</span>
-              </button>
-              <button type="button" className="user-header__menu-item">
+              </Link>
+              <Link to="/settings" className="user-header__menu-item">
                 <span className="user-header__menu-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <circle cx="12" cy="12" r="3" />
@@ -189,7 +189,7 @@ function UserHomepage() {
                   </svg>
                 </span>
                 <span>Settings</span>
-              </button>
+              </Link>
               <button
                 type="button"
                 className="user-header__menu-item user-header__menu-item--logout"
@@ -215,10 +215,10 @@ function UserHomepage() {
           Book laboratories, seminar halls, and equipment effortlessly anytime, anywhere.
         </p>
         <div className="intro-hero__actions">
-          <Link to="/bookings" className="intro-hero__cta">
+          <Link to="/bookings" className="intro-hero__cta intro-hero__cta--ghost">
             View My Bookings
           </Link>
-          <button type="button" className="intro-hero__cta intro-hero__cta--secondary" onClick={clearFilters}>
+          <button type="button" className="intro-hero__cta" onClick={clearFilters}>
             Show All Resources
           </button>
         </div>

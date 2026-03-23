@@ -7,6 +7,8 @@ import AdminStack from '../Stacks/AdminStack'
 import Booking from './Pages/Booking.jsx'
 import MyBookings from './Pages/MyBookings.jsx'
 import UserNotifications from './Pages/UserNotifications.jsx'
+import UserProfile from './Pages/UserProfile.jsx'
+import UserSettings from './Pages/UserSettings.jsx'
 import ResourceAvailable from './Admin/resourceavailable.jsx'
 import ProtectedRoute from './Auth/ProtectedRoute.jsx'
 
@@ -22,6 +24,8 @@ function App() {
           <Route path="/resource/:id" element={<Booking />} />
           <Route path="/bookings" element={<MyBookings />} />
           <Route path="/notifications" element={<UserNotifications />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/settings" element={<UserSettings />} />
         </Route>
         <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/admin/*" element={<AdminStack />} />
