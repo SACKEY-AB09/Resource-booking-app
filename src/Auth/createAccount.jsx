@@ -1,5 +1,4 @@
 import styles from "./signup.module.css";
-import Create from "../assets/create.svg";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_BASE } from "../config/api";
@@ -86,23 +85,6 @@ const CreateAccount = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <div
-          className={styles.left}
-          style={{ backgroundImage: `url(${Create})` }}
-        >
-          <h2 style={{ padding: 10, color: "white" }}>
-            Welcome to CampusReserve
-          </h2>
-          <ul>
-            <li style={{ color: "white", paddingBottom: 15 }}>
-              Create your account to start booking campus resources
-            </li>
-            <li style={{ color: "white" }}>
-              Choose your role and enjoy seamless resource reservation
-              management
-            </li>
-          </ul>
-        </div>
         <div className={styles.right}>
           <div className={styles.head}>
             <h2>Create Account</h2>

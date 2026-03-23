@@ -1,5 +1,4 @@
 import styles from "./signIn.module.css";
-import SigninSvg from "../assets/Signin.svg";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_BASE } from "../config/api";
@@ -56,16 +55,6 @@ const Index = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <div
-          className={styles.left}
-          style={{
-            backgroundImage: `url(${SigninSvg})`,
-            backgroundSize: "cover",
-          }}
-        >
-          {/* <img src={SigninSvg} className={styles.img} /> */}
-
-        </div>
         <div className={styles.right}>
           <div className={styles.head}>
             <h2 className="h">Welcome Back</h2>
