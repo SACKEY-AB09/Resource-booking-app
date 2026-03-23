@@ -1,0 +1,47 @@
+/* * {
+  color: white;
+} */
+
+.header {
+  width: 100%;
+  background-color: #002b56;
+  color: white;
+  position: absolute;
+  z-index: 100;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.container {
+  padding: 5px 5%;
+  padding-top: 8%;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.newbooking__btn {
+  background-color: blue;
+  border: none;
+  padding: 2px 7px;
+  border-radius: 5px;
+  color: white;
+  align-items: center;
+
+  display: flex;
+  gap: 3px;
+}
+
+.newbooking__btn:hover {
+  cursor: pointer;
+}
+.section1 {
+  display: flex;
+  justify-content: space-between;
+}
