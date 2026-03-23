@@ -51,9 +51,9 @@ const Userprofile = () => {
             </span>
             <span>Settings</span>
           </button>
-          <button onClick={() => navigate("/mybookings")}>
+          {/* <button onClick={() => navigate("/mybookings")}>
             <span className="user-header__menu-item">My bookings</span>
-          </button>
+          </button> */}
           <Link
             to="/login"
             className="user-header__menu-item user-header__menu-item--logout"

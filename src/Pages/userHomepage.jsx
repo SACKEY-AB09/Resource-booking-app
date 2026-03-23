@@ -109,7 +109,11 @@ function UserHomepage() {
       {/* User header with profile menu */}
       <header className="user-header">
         <img src={LOGO} className="user-header__logo" />
+        {/* <div></div> */}
         <div className="user-header__right">
+          <Link to="/mybookings" className="bookings_link">
+            My bookings
+          </Link>
           <button
             type="button"
             className="user-header__profile-btn"
@@ -156,9 +160,6 @@ function UserHomepage() {
                 </span>
                 <span>Settings</span>
               </button>
-              <button onClick={() => navigate("/mybookings")}>
-                <span className="user-header__menu-item">My bookings</span>
-              </button>
               <button
               className="user-header__menu-item user-header__menu-item--logout"
               onClick={() => {
@@ -167,6 +168,7 @@ function UserHomepage() {
                 navigate('/login', {replace: true})
 
                 }}
+
               >
                 <span className="user-header__menu-icon">
                   <svg

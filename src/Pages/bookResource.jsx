@@ -40,10 +40,10 @@ function getTodayStr() {
   return d.toISOString().split("T")[0];
 }
 
-const BookResource = ({ isAdmin = false }) => {
-  const { id } = useParams();
+const BookResource = () => {
+  // const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   // const resourceFromState = location.state?.resource;
 
   // Resource fetched from backend (fallback to state)
@@ -114,7 +114,7 @@ const BookResource = ({ isAdmin = false }) => {
       const res = await fetch(`${API_BASE}/bookings`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        credentials: "include",
         body: JSON.stringify({
           resource_id: Number(resource),
           start_time,
