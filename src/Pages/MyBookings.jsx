@@ -1,10 +1,10 @@
 import Userprofile from "../componemts/userprofile";
 import "./mybookings.css";
-import Date from "../componemts/Date.svg";
+import Cal from "../componemts/Date.svg";
 import { useEffect, useState } from "react";
 import { API_BASE } from "../config/api";
 import Header from "../componemts/header1.jsx";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const MyBookings = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -52,6 +52,23 @@ const MyBookings = () => {
     fetchBookings();
   }, []);
 
+  //Date and time formatting
+  const formatDate = (dateStr) => {
+    return new Date(dateStr).toLocaleDateString("en-GB", {
+      weekday: "short", // Mon
+      day: "numeric", // 31
+      month: "short", // Mar
+      year: "numeric", // 2026
+    });
+  };
+
+  const formatTime = (dateStr) => {
+    return new Date(dateStr).toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   return (
     <div>
       <Header name={user?.name} />
@@ -65,13 +82,28 @@ const MyBookings = () => {
             className="newbooking__btn"
             onClick={() => navigate("/mybookings/book")}
           >
-            <img src={Date} width={20} />
+            <img src={Cal} width={20} />
             <p>New Booking</p>
           </button>
         </div>
         <div className="section2">
           {bookings.map((booking) => (
-            <div></div>
+            <div key={booking.booking_id} className="booking">
+              <span className={`status ${booking.status}`}>
+                {booking.status}
+              </span>
+              <h3>{booking.resource_name}</h3>
+              {/* <a href={booking.location} target="_blank" rel="noreferrer">
+                📍 View Location
+              </a> */}
+              <p className="info">Capacity: {booking.capacity}</p>
+              <p className="info">{formatDate(booking.start_time)}</p>
+              <p className="info">
+                {formatTime(booking.start_time)} -{" "}
+                {formatTime(booking.end_time)}
+              </p>
+              <button className="button">View Details</button>
+            </div>
           ))}
         </div>
       </div>
