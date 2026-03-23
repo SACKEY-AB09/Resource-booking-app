@@ -18,6 +18,7 @@ function App() {
         <Route path="/resource/:id" element={<Booking />} />  
         <Route path="/admin/*" element={<AdminStack />} />
         <Route path="/resources" element={<ResourceAvailable />} /> 
+        <Route path ="/resource/:id" element = {<Booking isAdmin ={true} />} />
       </Routes>
     </BrowserRouter>
   )
