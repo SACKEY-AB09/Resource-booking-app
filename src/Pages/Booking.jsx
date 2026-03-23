@@ -36,12 +36,22 @@ function getTodayStr() {
   return d.toISOString().split('T')[0];
 }
 
+function isUrl(value) {
+  return typeof value === 'string' && /^https?:\/\//i.test(value.trim());
+}
+
 function normalizeResource(data, id) {
   if (!data) return null;
 
+  const rawLocation = data.location || '';
+  const rawLocationName = data.location_name || '';
+  const locationUrl = isUrl(rawLocation) ? rawLocation : '';
+  const locationLabel = rawLocationName || (!locationUrl ? rawLocation : '');
+
   return {
     name: data.name || data.resource_name || `Resource #${id}`,
-    location: data.location || data.location_name || '',
+    location: locationLabel,
+    locationUrl,
     capacity: data.capacity,
   };
 }
@@ -154,16 +164,30 @@ function Booking({ isAdmin = false }) {
                   <p className="bp-resource-card__name">{resource.name}</p>
                   <div className="bp-resource-card__meta">
                     {resource.location && (
-                      <span>
+                      <span className="bp-resource-card__meta-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
                           <circle cx="12" cy="9" r="2.5" />
                         </svg>
-                        {resource.location}
+                        {resource.locationUrl ? (
+                          <a
+                            className="bp-resource-card__location-link"
+                            href={resource.locationUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            title={resource.location}
+                          >
+                            {resource.location}
+                          </a>
+                        ) : (
+                          <span className="bp-resource-card__location-text" title={resource.location}>
+                            {resource.location}
+                          </span>
+                        )}
                       </span>
                     )}
                     {resource.capacity && (
-                      <span>
+                      <span className="bp-resource-card__meta-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                           <circle cx="9" cy="7" r="4" />
