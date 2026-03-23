@@ -71,7 +71,7 @@ function ResourceCard({ resource, isAuthenticated, isAdmin = false, onDelete = (
           )}
           {isAuthenticated ? (
             <Link
-              to={isAdmin ? `/admin/resource/${id}` : `/resource/${id}`}
+              to={`/resource/${id}`}
               state={{ resource: { id, name, location, capacity, description } }}
               className="resource-card__btn resource-card__btn--primary"
             >

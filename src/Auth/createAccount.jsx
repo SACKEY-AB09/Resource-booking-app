@@ -2,6 +2,7 @@ import styles from "./signup.module.css";
 import Create from "../assets/create.svg";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API_BASE } from "../config/api";
 
 const CreateAccount = () => {
   const navigate = useNavigate();
@@ -52,21 +53,17 @@ const CreateAccount = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch(
-        "https://resource-booking-backend.onrender.com/api/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            password: formData.password,
-          
-          }),
+      const response = await fetch(`${API_BASE}/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
       const data = await response.json();
 

@@ -7,6 +7,7 @@ const DEFAULT_FORM = {
   resource_type: "",
   description: "",
   location: "",
+  location_name: "",
   capacity: "",
   availability_status: true,
   approval_required: true,
@@ -28,8 +29,14 @@ export default function CreateResource({ onNotify }) {
     setError("");
     setSuccess("");
 
-    if (!form.resource_name.trim() || !form.resource_type.trim()) {
-      setError("Resource name and type are required.");
+    if (
+      !form.resource_name.trim() ||
+      !form.resource_type.trim() ||
+      !form.location.trim() ||
+      !form.location_name.trim() ||
+      form.capacity === ""
+    ) {
+      setError("Resource name, type, location, location name, and capacity are required.");
       return;
     }
 
@@ -38,6 +45,7 @@ export default function CreateResource({ onNotify }) {
       resource_type: form.resource_type.trim(),
       description: form.description.trim(),
       location: form.location.trim(),
+      location_name: form.location_name.trim(),
       capacity: form.capacity === "" ? null : Number(form.capacity),
       availability_status: Boolean(form.availability_status),
       approval_required: Boolean(form.approval_required),
@@ -112,6 +120,15 @@ export default function CreateResource({ onNotify }) {
               <input
                 value={form.location}
                 onChange={(e) => onChange("location", e.target.value)}
+                placeholder="https://maps.google.com/?q=Engineering+Block"
+              />
+            </div>
+
+            <div className="at-field">
+              <label>Location Name</label>
+              <input
+                value={form.location_name}
+                onChange={(e) => onChange("location_name", e.target.value)}
                 placeholder="Engineering Block"
               />
             </div>

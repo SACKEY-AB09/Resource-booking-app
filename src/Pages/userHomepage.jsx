@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import ResourceCard from '../componemts/ResourceCard';
 import Footer from '../componemts/footer';
 import './intropage.css';
-import { API_BASE } from '../config/api';
 import LOGO from "../assets/LOGO.png";
+import { apiRequest, logoutSession } from '../Auth/authApi';
+import { getStoredSession } from '../Auth/session';
 
 
 const INITIAL_RESOURCE_COUNT = 6;
@@ -46,6 +47,7 @@ function normalizeResource(apiResource) {
 }
 
 function UserHomepage() {
+  const session = getStoredSession();
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -59,9 +61,7 @@ function UserHomepage() {
       try {
         setLoading(true);
         setError(null);
-        const res = await fetch(`${API_BASE}/resources`);
-        if (!res.ok) throw new Error('Failed to load resources');
-        const data = await res.json();
+        const data = await apiRequest('/resources');
         const list = Array.isArray(data) ? data : data.resources || data.data || [];
         setResources(list);
       } catch (err) {
@@ -137,7 +137,11 @@ function UserHomepage() {
                 </span>
                 <span>Settings</span>
               </button>
-              <Link to="/login" className="user-header__menu-item user-header__menu-item--logout">
+              <button
+                type="button"
+                className="user-header__menu-item user-header__menu-item--logout"
+                onClick={() => logoutSession()}
+              >
                 <span className="user-header__menu-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M10 17l5-5-5-5" />
@@ -146,7 +150,7 @@ function UserHomepage() {
                   </svg>
                 </span>
                 <span>Log Out</span>
-              </Link>
+              </button>
             </div>
           )}
         </div>
@@ -267,7 +271,7 @@ function UserHomepage() {
                     <ResourceCard
                       key={r.resource_id}
                       resource={normalizeResource(r)}
-                      isAuthenticated={true}
+                      isAuthenticated={session.isAuthenticated}
                     />
                   ))}
                 </div>

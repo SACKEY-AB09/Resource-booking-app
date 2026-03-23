@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import './booking.css';
-import { API_BASE } from '../config/api';
+import { apiRequest } from '../Auth/authApi';
+import { getStoredSession } from '../Auth/session';
 
-// Duration options in hours
 const DURATION_OPTIONS = [0.5, 1, 1.5, 2, 2.5, 3, 4, 6, 8];
 
-// Time slots every 30 min
 const TIME_SLOTS = Array.from({ length: 32 }, (_, i) => {
   const totalMin = i * 30;
   const h = Math.floor(totalMin / 60);
@@ -17,7 +16,6 @@ const TIME_SLOTS = Array.from({ length: 32 }, (_, i) => {
 });
 
 function formatDatetimeLocal(dateStr, timeStr) {
-  // dateStr: YYYY-MM-DD, timeStr: HH:MM
   return `${dateStr}T${timeStr}:00`;
 }
 
@@ -38,34 +36,41 @@ function getTodayStr() {
   return d.toISOString().split('T')[0];
 }
 
+function normalizeResource(data, id) {
+  if (!data) return null;
+
+  return {
+    name: data.name || data.resource_name || `Resource #${id}`,
+    location: data.location || data.location_name || '',
+    capacity: data.capacity,
+  };
+}
+
 function Booking({ isAdmin = false }) {
+  const session = getStoredSession();
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const resourceFromState = location.state?.resource;
 
-  // Resource fetched from backend (fallback to state)
   const [resource, setResource] = useState(resourceFromState || null);
   const [loadingResource, setLoadingResource] = useState(!resourceFromState);
-
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [duration, setDuration] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState(null);
 
-  // Fetch resource info if not passed via state
   useEffect(() => {
     if (resourceFromState) return;
+
     setLoadingResource(true);
-    fetch(`${API_BASE}/resources/${id}`)
-      .then((r) => r.json())
-      .then((data) => setResource(data))
+    apiRequest(`/resources/${id}`)
+      .then((data) => setResource(normalizeResource(data, id)))
       .catch(() => setResource(null))
       .finally(() => setLoadingResource(false));
   }, [id, resourceFromState]);
 
-  // Compute end time display for user preview
   const endTimePreview =
     date && time && duration ? addHours(date, time, Number(duration)) : null;
 
@@ -83,10 +88,9 @@ function Booking({ isAdmin = false }) {
     setMessage(null);
 
     try {
-      const res = await fetch(`${API_BASE}/bookings`, {
+      const result = await apiRequest('/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials : 'include',
         body: JSON.stringify({
           resource_id: Number(id),
           start_time,
@@ -94,15 +98,9 @@ function Booking({ isAdmin = false }) {
         }),
       });
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.message || 'Booking failed');
-      }
-
-      const result = await res.json();
       setMessage({
         type: 'success',
-        text: result.message || 'Booking created successfully — awaiting approval.',
+        text: result.message || 'Booking created successfully - awaiting approval.',
       });
       setDate('');
       setTime('');
@@ -118,7 +116,6 @@ function Booking({ isAdmin = false }) {
 
   return (
     <div className="bp-root">
-      {/* ── Header ── */}
       <header className="bp-header">
         <span className="bp-header__brand">Resource Booking</span>
         <div className="bp-header__right">
@@ -135,15 +132,13 @@ function Booking({ isAdmin = false }) {
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
               <circle cx="12" cy="7" r="4" />
             </svg>
-            {isAdmin ? 'Akwasi' : 'User'}
+            {session.name || (isAdmin ? 'Admin' : 'User')}
           </span>
         </div>
       </header>
 
-      {/* ── Main ── */}
       <main className="bp-main">
         <div className="bp-panel">
-          {/* Resource card */}
           <div className="bp-resource-card">
             {loadingResource ? (
               <div className="bp-resource-card__skeleton" />
@@ -164,7 +159,7 @@ function Booking({ isAdmin = false }) {
                           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
                           <circle cx="12" cy="9" r="2.5" />
                         </svg>
-                        {resource.location.startsWith('http') ? 'On Campus ' : resource.location}
+                        {resource.location}
                       </span>
                     )}
                     {resource.capacity && (
@@ -186,7 +181,6 @@ function Booking({ isAdmin = false }) {
             )}
           </div>
 
-          {/* Form card */}
           <div className="bp-form-card">
             <div className="bp-form-card__head">
               <h2>Book Resource</h2>
@@ -194,7 +188,6 @@ function Booking({ isAdmin = false }) {
             </div>
 
             <form className="bp-form" onSubmit={handleSubmit}>
-              {/* Date */}
               <div className="bp-field">
                 <label htmlFor="bp-date">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -215,7 +208,6 @@ function Booking({ isAdmin = false }) {
                 />
               </div>
 
-              {/* Time — select */}
               <div className="bp-field">
                 <label htmlFor="bp-time">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -237,7 +229,6 @@ function Booking({ isAdmin = false }) {
                 </select>
               </div>
 
-              {/* Duration — select */}
               <div className="bp-field">
                 <label htmlFor="bp-duration">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -261,7 +252,6 @@ function Booking({ isAdmin = false }) {
                 </select>
               </div>
 
-              {/* Booking summary preview */}
               {endTimePreview && (
                 <div className="bp-summary">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -269,13 +259,12 @@ function Booking({ isAdmin = false }) {
                   </svg>
                   <span>
                     Booking window: <strong>{formatDatetimeLocal(date, time).replace('T', ' ').slice(0, 16)}</strong>
-                    {' → '}
+                    {' -> '}
                     <strong>{endTimePreview.replace('T', ' ').slice(0, 16)}</strong>
                   </span>
                 </div>
               )}
 
-              {/* Pending approval note */}
               <div className="bp-notice">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="12" cy="12" r="10" />
@@ -285,7 +274,6 @@ function Booking({ isAdmin = false }) {
                 Bookings require admin approval before they are confirmed.
               </div>
 
-              {/* Message */}
               {message && (
                 <div className={`bp-message bp-message--${message.type}`}>
                   {message.type === 'success' ? (
@@ -311,7 +299,7 @@ function Booking({ isAdmin = false }) {
                   {submitting ? (
                     <>
                       <span className="bp-spinner" />
-                      Submitting…
+                      Submitting...
                     </>
                   ) : (
                     'Submit Booking'
@@ -322,8 +310,6 @@ function Booking({ isAdmin = false }) {
           </div>
         </div>
       </main>
-
-     
     </div>
   );
 }

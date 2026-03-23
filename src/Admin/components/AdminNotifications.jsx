@@ -14,7 +14,7 @@ function timeAgo(iso) {
   return `${days} day${days === 1 ? "" : "s"} ago`;
 }
 
-export default function AdminNotifications({ notifications, onClear }) {
+export default function AdminNotifications({ notifications, onClear, onMarkRead }) {
   const list = Array.isArray(notifications) ? notifications : [];
 
   return (
@@ -64,6 +64,15 @@ export default function AdminNotifications({ notifications, onClear }) {
                     <span className="at-note__time">{timeAgo(n.createdAt)}</span>
                   </div>
                   <div className="at-note__msg">{n.message}</div>
+                  {!n.read && (
+                    <button
+                      type="button"
+                      className="at-btn at-btn--ghost"
+                      onClick={() => onMarkRead?.(n.id)}
+                    >
+                      Mark as read
+                    </button>
+                  )}
                 </div>
               </div>
             ))}

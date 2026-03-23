@@ -3,6 +3,7 @@ import SigninSvg from "../assets/Signin.svg";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_BASE } from "../config/api";
+import { storeSession } from "./session";
 
 const Index = () => {
   //variables for the data to be sent to backend
@@ -29,15 +30,11 @@ const Index = () => {
     const data = await response.json();
 
     if (response.ok) {
-      // Save token and user info to localStorage
-     
-      localStorage.setItem("user_name", data.user.name);
-      localStorage.setItem("user_role", data.user.role);
+      storeSession(data.user);
 
       // Redirect based on role
       if (data.user.role === "admin") {
-        localStorage.setItem("admin_name", data.user.name);
-        navigate("/Admin", {replace: true});
+        navigate("/admin", {replace: true});
       } else {
         navigate("/home", {replace: true}); // student goes to user homepage
       }

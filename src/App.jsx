@@ -6,6 +6,7 @@ import AuthStack from '../Stacks/AuthStack'
 import AdminStack from '../Stacks/AdminStack'
 import Booking from './Pages/Booking.jsx'
 import ResourceAvailable from './Admin/resourceavailable.jsx'
+import ProtectedRoute from './Auth/ProtectedRoute.jsx'
 
 function App() {
   return (
@@ -14,10 +15,14 @@ function App() {
         <Route path="/" element={<Intropage />} />
         <Route path="/login" element={<AuthStack />} />
         <Route path="/signup" element={<AuthStack />} />
-        <Route path="/home" element={<UserHomepage />} />
-        <Route path="/resource/:id" element={<Booking />} />  
-        <Route path="/admin/*" element={<AdminStack />} />
-        <Route path="/resources" element={<ResourceAvailable />} /> 
+        <Route element={<ProtectedRoute allowedRoles={["student", "faculty", "admin"]} />}>
+          <Route path="/home" element={<UserHomepage />} />
+          <Route path="/resource/:id" element={<Booking />} />
+        </Route>
+        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+          <Route path="/admin/*" element={<AdminStack />} />
+          <Route path="/resources" element={<ResourceAvailable />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

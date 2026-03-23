@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import ResourceCard from '../componemts/ResourceCard';
 import Footer from '../componemts/footer';
 import '../Pages/intropage.css';
-import { API_BASE } from '../config/api';
-
+import { apiFetch } from './components/adminApi';
 
 const INITIAL_RESOURCE_COUNT = 6;
 const CATEGORIES = [
@@ -13,10 +11,6 @@ const CATEGORIES = [
   { label: 'Auditoriums', slug: 'auditoriums', match: ['auditorium', 'hall'] },
 ];
 
-/**
- * Maps API resource to category label for filtering.
- * Uses resource_type and resource_name to determine category.
- */
 function getCategoryFromResource(resource) {
   const type = (resource.resource_type || '').toLowerCase();
   const name = (resource.resource_name || resource.name || '').toLowerCase();
@@ -28,9 +22,6 @@ function getCategoryFromResource(resource) {
   return null;
 }
 
-/**
- * Normalizes API resource to ResourceCard props.
- */
 function normalizeResource(apiResource) {
   return {
     id: apiResource.resource_id,
@@ -45,7 +36,6 @@ function normalizeResource(apiResource) {
 }
 
 function ResourceAvailable() {
-
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -59,21 +49,17 @@ function ResourceAvailable() {
       try {
         setLoading(true);
         setError(null);
-        const res = await fetch(`${API_BASE}/resources`);
-        if (!res.ok) throw new Error('Failed to load resources');
-        const data = await res.json();
-        console.log("Data:", data);
+        const data = await apiFetch('/resources', { method: 'GET' });
         const list = Array.isArray(data) ? data : data.resources || data.data || [];
-        console.log("List:", list)
         setResources(list);
       } catch (err) {
-        console.assert("error:", err);
         setError(err.message || 'Could not load resources');
         setResources([]);
       } finally {
         setLoading(false);
       }
     }
+
     fetchResources();
   }, []);
 
@@ -103,26 +89,22 @@ function ResourceAvailable() {
   const hasMoreToShow =
     filteredResources.length > INITIAL_RESOURCE_COUNT && !showAllResources;
 
+  const handleDelete = async (resourceId) => {
+    if (!window.confirm("Are you sure you want to delete this resource?")) return;
 
-const handleDelete = async (resourceId) => {
-  if (!window.confirm("Are you sure you want to delete this resource?")) return;
-  try {
-    const res = await fetch(`${API_BASE}/resources/${resourceId}`, {
-      method: "DELETE",
-      credentials: "include",
-    });
-    if (!res.ok) throw new Error("Failed to delete resource");
-    // Remove from state immediately without refetching
-    setResources((prev) => prev.filter((r) => r.resource_id !== resourceId));
-  } catch (err) {
-    alert(err.message || "Could not delete resource");
-  }
-};
+    try {
+      await apiFetch(`/resources/${resourceId}`, {
+        method: "DELETE",
+      });
+      setResources((prev) => prev.filter((r) => r.resource_id !== resourceId));
+    } catch (err) {
+      alert(err.message || "Could not delete resource");
+    }
+  };
 
   return (
     <div className="intropage">
-      {/* User header with profile menu */}
-        <header className="ah-topbar">
+      <header className="ah-topbar">
         <div className="ah-topbar__left">Resource management</div>
         <div className="ah-topbar__right">
           <span className="ah-chip">Resource available</span>
@@ -139,7 +121,7 @@ const handleDelete = async (resourceId) => {
             {adminName}
           </span>
         </div>
-    </header>
+      </header>
 
       <section className="intro-resources">
         <div className="intro-resources__header">
@@ -161,7 +143,6 @@ const handleDelete = async (resourceId) => {
           </button>
         </div>
 
-        {/* Mobile filter modal */}
         <div
           className={`intro-resources__filter-modal ${filterOpen ? 'intro-resources__filter-modal--open' : ''}`}
           aria-hidden={!filterOpen}
@@ -236,7 +217,7 @@ const handleDelete = async (resourceId) => {
           </aside>
 
           <div className="intro-resources__main">
-            {loading && <p className="intro-resources__loading">Loading resources…</p>}
+            {loading && <p className="intro-resources__loading">Loading resources...</p>}
             {error && <p className="intro-resources__error">{error}</p>}
             {!loading && !error && displayedResources.length === 0 && (
               <p className="intro-resources__empty">No resources match your filters.</p>
@@ -249,9 +230,8 @@ const handleDelete = async (resourceId) => {
                       key={r.resource_id}
                       resource={normalizeResource(r)}
                       isAuthenticated={true}
-                        isAdmin={true} 
-                         onDelete={() => handleDelete(r.resource_id)}
-
+                      isAdmin={true}
+                      onDelete={() => handleDelete(r.resource_id)}
                     />
                   ))}
                 </div>
