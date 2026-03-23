@@ -3,13 +3,12 @@
   display: flex;
   flex-direction: column;
   background: #f5f6f8;
- 
 }
 
 /* Hero */
 .intro-hero {
   padding: 2.5rem 1.5rem 3rem;
-  background: #002B56;
+  background: #002b56;
   color: #fff;
   text-align: center;
 }
@@ -39,8 +38,13 @@
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
+<<<<<<< HEAD
   background: #35D786;
   border: 1px solid #35D786;
+=======
+  background: #35d786;
+  border: none;
+>>>>>>> 43aa2b65b500faecf4f1dde9e2a1a99df7687132
   border-radius: 50px;
   cursor: pointer;
   text-decoration: none;
@@ -112,7 +116,7 @@
   margin-left: 0;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #0C0950;
+  color: #0c0950;
 }
 
 /* Mobile filter trigger - visible only on small screens */
@@ -169,7 +173,7 @@
   margin-bottom: 1.25rem;
   font-size: 0.95rem;
   font-weight: 600;
-  background: #3D37EF;
+  background: #3d37ef;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -210,16 +214,15 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
-  font-size: 0.95rem;background-color: #FFFFFF;
+  font-size: 0.95rem;
+  background-color: #ffffff;
   color: #333;
-  ;
 }
 
 .intro-resources__checkbox input {
   width: 1.1rem;
   height: 1.1rem;
-  accent-color: #FFFFFF;
-
+  accent-color: #ffffff;
 }
 
 .intro-resources__main {
@@ -255,10 +258,10 @@
 .intro-resources__show-more {
   padding: 1rem 4rem;
   font-size: 1.5rem;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 600;
-  color: #0C0950;
-  background: #35D786;
+  color: #0c0950;
+  background: #35d786;
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -272,10 +275,9 @@
 /* CTA banner */
 .intro-cta {
   padding: 2.5rem 2rem;
-  background: #7161E1;
+  background: #7161e1;
   color: #fff;
   text-align: center;
- 
 }
 
 .intro-cta__title {
@@ -294,12 +296,14 @@
   padding: 0.7rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
-  color: #7161E1;
+  color: #7161e1;
   background: rgba(255, 255, 255, 0.95);
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition:
+    background 0.2s,
+    transform 0.1s;
 }
 
 .intro-cta__btn:hover {
@@ -356,6 +360,7 @@
   position: relative;
   display: flex;
   align-items: center;
+<<<<<<< HEAD
   gap: 0.75rem;
 }
 
@@ -398,6 +403,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+=======
+  gap: 10px;
+>>>>>>> 43aa2b65b500faecf4f1dde9e2a1a99df7687132
 }
 
 .user-header__profile-btn {
@@ -480,7 +488,9 @@
   background: rgba(0, 0, 0, 0.4);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s, visibility 0.2s;
+  transition:
+    opacity 0.2s,
+    visibility 0.2s;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -586,11 +596,16 @@
   --muted: #6b7280;
   background: var(--bg);
   color: var(--text);
-  font-family: "DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-family:
+    "DM Sans",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 .ah-topbar {
-   --navy: #0d1f3c;
+  --navy: #0d1f3c;
   --navy-2: #162d52;
   --blue: #2563eb;
   --blue-2: #1d4ed8;
@@ -601,7 +616,12 @@
   --muted: #6b7280;
   background: var(--bg);
   color: var(--text);
-  font-family: "DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-family:
+    "DM Sans",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
   height: 56px;
   background: var(--navy);
   color: #fff;
@@ -611,6 +631,7 @@
   font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: -0.01em;
+  gap: 30px;
 }
 .ah-topbar__right {
   display: flex;
@@ -687,4 +708,12 @@
     grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
     gap: 1.25rem;
   }
+}
+
+.bookings_link {
+  text-decoration: none;
+}
+
+.bookings_link:hover {
+  text-decoration: underline;
 }

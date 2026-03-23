@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import './booking.css';
+<<<<<<< HEAD
 import { apiRequest } from '../Auth/authApi';
 import { getStoredSession } from '../Auth/session';
+=======
+import { API_BASE } from '../config/api';
+import BackButton from '../componemts/backuButton';
+>>>>>>> 43aa2b65b500faecf4f1dde9e2a1a99df7687132
 
 const DURATION_OPTIONS = [0.5, 1, 1.5, 2, 2.5, 3, 4, 6, 8];
 
@@ -130,7 +135,13 @@ function Booking({ isAdmin = false }) {
   return (
     <div className="bp-root">
       <header className="bp-header">
+<<<<<<< HEAD
         <Link to="/home" className="bp-header__brand">Resource Booking</Link>
+=======
+        <BackButton />
+
+        <span className="bp-header__brand">Resource Booking</span>
+>>>>>>> 43aa2b65b500faecf4f1dde9e2a1a99df7687132
         <div className="bp-header__right">
           {isAdmin && (
             <span className="bp-badge bp-badge--admin">

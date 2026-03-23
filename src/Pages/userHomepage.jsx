@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ResourceCard from '../componemts/ResourceCard';
@@ -8,12 +9,22 @@ import LOGO from "../assets/LOGO.png";
 import { apiRequest, logoutSession } from '../Auth/authApi';
 import { getStoredSession } from '../Auth/session';
 
+=======
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import ResourceCard from "../componemts/ResourceCard";
+import Footer from "../componemts/footer";
+import "./intropage.css";
+import { API_BASE } from "../config/api";
+import LOGO from "../assets/LOGO.png";
+import BackButton from "../componemts/backuButton";
+>>>>>>> 43aa2b65b500faecf4f1dde9e2a1a99df7687132
 
 const INITIAL_RESOURCE_COUNT = 6;
 const CATEGORIES = [
-  { label: 'ICT Labs', slug: 'ict-labs', match: ['lab', 'ict', 'computer'] },
-  { label: 'Class rooms', slug: 'class', match: ['class', 'room'] },
-  { label: 'Auditoriums', slug: 'auditoriums', match: ['auditorium', 'hall'] },
+  { label: "ICT Labs", slug: "ict-labs", match: ["lab", "ict", "computer"] },
+  { label: "Class rooms", slug: "class", match: ["class", "room"] },
+  { label: "Auditoriums", slug: "auditoriums", match: ["auditorium", "hall"] },
 ];
 
 /**
@@ -21,8 +32,8 @@ const CATEGORIES = [
  * Uses resource_type and resource_name to determine category.
  */
 function getCategoryFromResource(resource) {
-  const type = (resource.resource_type || '').toLowerCase();
-  const name = (resource.resource_name || resource.name || '').toLowerCase();
+  const type = (resource.resource_type || "").toLowerCase();
+  const name = (resource.resource_name || resource.name || "").toLowerCase();
   const search = `${type} ${name}`;
 
   for (const cat of CATEGORIES) {
@@ -64,11 +75,20 @@ function UserHomepage() {
       try {
         setLoading(true);
         setError(null);
+<<<<<<< HEAD
         const data = await apiRequest('/resources');
         const list = Array.isArray(data) ? data : data.resources || data.data || [];
+=======
+        const res = await fetch(`${API_BASE}/resources`);
+        if (!res.ok) throw new Error("Failed to load resources");
+        const data = await res.json();
+        const list = Array.isArray(data)
+          ? data
+          : data.resources || data.data || [];
+>>>>>>> 43aa2b65b500faecf4f1dde9e2a1a99df7687132
         setResources(list);
       } catch (err) {
-        setError(err.message || 'Could not load resources');
+        setError(err.message || "Could not load resources");
         setResources([]);
       } finally {
         setLoading(false);
@@ -93,7 +113,7 @@ function UserHomepage() {
 
   const toggleCategory = (label) => {
     setSelectedCategories((prev) =>
-      prev.includes(label) ? prev.filter((c) => c !== label) : [...prev, label]
+      prev.includes(label) ? prev.filter((c) => c !== label) : [...prev, label],
     );
   };
 
@@ -117,18 +137,26 @@ function UserHomepage() {
   const hasMoreToShow =
     filteredResources.length > INITIAL_RESOURCE_COUNT && !showAllResources;
 
+  //for my bookings
+  const navigate = useNavigate();
   return (
     <div className="intropage">
       {/* User header with profile menu */}
       <header className="user-header">
         <img src={LOGO} className="user-header__logo" />
+        {/* <div></div> */}
         <div className="user-header__right">
+<<<<<<< HEAD
           <Link to="/notifications" className="user-header__bell" aria-label="Open notifications">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
               <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>
             {unreadCount > 0 && <span className="user-header__badge">{unreadCount}</span>}
+=======
+          <Link to="/mybookings" className="bookings_link">
+            My bookings
+>>>>>>> 43aa2b65b500faecf4f1dde9e2a1a99df7687132
           </Link>
           <button
             type="button"
@@ -136,7 +164,12 @@ function UserHomepage() {
             aria-label="Open profile menu"
             onClick={() => setMenuOpen((open) => !open)}
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
               <circle cx="12" cy="7" r="4" />
             </svg>
@@ -174,7 +207,12 @@ function UserHomepage() {
               </Link>
               <Link to="/profile" className="user-header__menu-item">
                 <span className="user-header__menu-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                     <circle cx="12" cy="7" r="4" />
                   </svg>
@@ -183,20 +221,43 @@ function UserHomepage() {
               </Link>
               <Link to="/settings" className="user-header__menu-item">
                 <span className="user-header__menu-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
                     <circle cx="12" cy="12" r="3" />
                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 .6 1.65 1.65 0 0 0-.33 1.82l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 8.6 15a1.65 1.65 0 0 0-1.82-.33l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 15 8.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 15z" />
                   </svg>
                 </span>
                 <span>Settings</span>
+<<<<<<< HEAD
               </Link>
               <button
                 type="button"
                 className="user-header__menu-item user-header__menu-item--logout"
                 onClick={() => setConfirmOpen(true)}
+=======
+              </button>
+              <button
+              className="user-header__menu-item user-header__menu-item--logout"
+              onClick={() => {
+              localStorage.clear(); // ← clears all saved data on logout
+              setMenuOpen(false);
+                navigate('/login', {replace: true})
+
+                }}
+
+>>>>>>> 43aa2b65b500faecf4f1dde9e2a1a99df7687132
               >
                 <span className="user-header__menu-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
                     <path d="M10 17l5-5-5-5" />
                     <path d="M15 12H3" />
                     <path d="M21 19V5a2 2 0 0 0-2-2h-4" />
@@ -212,8 +273,10 @@ function UserHomepage() {
       <section className="intro-hero">
         <h1 className="intro-hero__title">Manage. Reserve. Simplify.</h1>
         <p className="intro-hero__subtitle">
-          Book laboratories, seminar halls, and equipment effortlessly anytime, anywhere.
+          Book laboratories, seminar halls, and equipment effortlessly anytime,
+          anywhere.
         </p>
+<<<<<<< HEAD
         <div className="intro-hero__actions">
           <Link to="/bookings" className="intro-hero__cta intro-hero__cta--ghost">
             View My Bookings
@@ -222,6 +285,8 @@ function UserHomepage() {
             Show All Resources
           </button>
         </div>
+=======
+>>>>>>> 43aa2b65b500faecf4f1dde9e2a1a99df7687132
       </section>
 
       <section className="intro-resources">
@@ -234,7 +299,13 @@ function UserHomepage() {
             onClick={() => setFilterOpen(true)}
           >
             <span>Filter by</span>
-            <svg className="intro-resources__filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              className="intro-resources__filter-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <line x1="4" y1="6" x2="20" y2="6" />
               <line x1="4" y1="12" x2="20" y2="12" />
               <line x1="4" y1="18" x2="20" y2="18" />
@@ -246,11 +317,14 @@ function UserHomepage() {
 
         {/* Mobile filter modal */}
         <div
-          className={`intro-resources__filter-modal ${filterOpen ? 'intro-resources__filter-modal--open' : ''}`}
+          className={`intro-resources__filter-modal ${filterOpen ? "intro-resources__filter-modal--open" : ""}`}
           aria-hidden={!filterOpen}
           onClick={() => setFilterOpen(false)}
         >
-          <div className="intro-resources__filter-modal-inner" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="intro-resources__filter-modal-inner"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="intro-resources__filter-modal-header">
               <button
                 type="button"
@@ -259,7 +333,12 @@ function UserHomepage() {
                 onClick={() => setFilterOpen(false)}
               >
                 <span>Close</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
@@ -267,15 +346,24 @@ function UserHomepage() {
             </div>
             <div className="intro-resources__filter-modal-body">
               <div className="intro-resources__filter-modal-title-row">
-                <h3 className="intro-resources__filter-modal-heading">Filter by</h3>
-                <button type="button" className="intro-resources__filter-modal-show-all" onClick={clearFilters}>
+                <h3 className="intro-resources__filter-modal-heading">
+                  Filter by
+                </h3>
+                <button
+                  type="button"
+                  className="intro-resources__filter-modal-show-all"
+                  onClick={clearFilters}
+                >
                   Show all
                 </button>
               </div>
               <p className="intro-resources__filter-modal-label">Category</p>
               <ul className="intro-resources__filter-modal-list">
                 {CATEGORIES.map((cat) => (
-                  <li key={cat.slug} className="intro-resources__filter-modal-item">
+                  <li
+                    key={cat.slug}
+                    className="intro-resources__filter-modal-item"
+                  >
                     <label className="intro-resources__checkbox">
                       <input
                         type="checkbox"
@@ -319,10 +407,14 @@ function UserHomepage() {
           </aside>
 
           <div className="intro-resources__main">
-            {loading && <p className="intro-resources__loading">Loading resources…</p>}
+            {loading && (
+              <p className="intro-resources__loading">Loading resources…</p>
+            )}
             {error && <p className="intro-resources__error">{error}</p>}
             {!loading && !error && displayedResources.length === 0 && (
-              <p className="intro-resources__empty">No resources match your filters.</p>
+              <p className="intro-resources__empty">
+                No resources match your filters.
+              </p>
             )}
             {!loading && !error && displayedResources.length > 0 && (
               <>
@@ -354,9 +446,7 @@ function UserHomepage() {
 
       <section className="intro-cta">
         <h2 className="intro-cta__title">Good to have you signed in!</h2>
-        <p className="intro-cta__text">
-          Book easily, reserve easily
-        </p>
+        <p className="intro-cta__text">Book easily, reserve easily</p>
         <button type="button" className="intro-cta__btn">
           Explore resources
         </button>

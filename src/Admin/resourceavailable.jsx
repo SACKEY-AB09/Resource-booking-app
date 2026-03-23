@@ -3,10 +3,16 @@ import ResourceCard from '../componemts/ResourceCard';
 import ConfirmDialog from '../componemts/ConfirmDialog';
 import Footer from '../componemts/footer';
 import '../Pages/intropage.css';
+<<<<<<< HEAD
 import './adminHomepage.css';
 import AdminTopbar from './components/AdminTopbar';
 import { apiFetch } from './components/adminApi';
 import { logoutSession } from '../Auth/authApi';
+=======
+import { API_BASE } from '../config/api';
+import BackButton from '../componemts/backuButton';
+
+>>>>>>> 43aa2b65b500faecf4f1dde9e2a1a99df7687132
 
 const INITIAL_RESOURCE_COUNT = 6;
 const CATEGORIES = [
@@ -118,7 +124,31 @@ function ResourceAvailable() {
 
   return (
     <div className="intropage">
+<<<<<<< HEAD
       <AdminTopbar adminName={adminName} onLogout={() => setLogoutConfirmOpen(true)} />
+=======
+      {/* User header with profile menu */}
+        <header className="ah-topbar">
+          <BackButton />
+        <div className="ah-topbar__left">
+          Resource management</div>
+        <div className="ah-topbar__right">
+          <span className="ah-chip">Resource available</span>
+          <span className="ah-admin">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            {adminName}
+          </span>
+        </div>
+    </header>
+>>>>>>> 43aa2b65b500faecf4f1dde9e2a1a99df7687132
 
       <section className="intro-resources">
         <div className="intro-resources__header">
